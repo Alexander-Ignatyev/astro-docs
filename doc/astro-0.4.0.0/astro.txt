@@ -358,7 +358,7 @@ MoonDetails :: JulianDate -> DecimalDegrees -> DecimalDegrees -> DecimalDegrees 
 -- | inclination of the orbit
 [mdI] :: MoonDetails -> DecimalDegrees
 
--- | rccentricity of the orbit
+-- | eccentricity of the orbit
 [mdE] :: MoonDetails -> Double
 
 -- | semi-major axis of the orbit
@@ -369,7 +369,15 @@ MoonDetails :: JulianDate -> DecimalDegrees -> DecimalDegrees -> DecimalDegrees 
 
 -- | parallax at distance <a>mdA</a> from the Earth
 [mdPi] :: MoonDetails -> DecimalDegrees
+
+-- | Moon distance units, 1 MDU = semi-major axis of the Moon's orbit
+newtype MoonDistanceUnits
+MDU :: Double -> MoonDistanceUnits
 j2010MoonDetails :: MoonDetails
+
+-- | Convert MoonDistanceUnits to km
+mduToKm :: MoonDistanceUnits -> Double
+instance GHC.Show.Show Data.Astro.Moon.MoonDetails.MoonDistanceUnits
 instance GHC.Show.Show Data.Astro.Moon.MoonDetails.MoonDetails
 
 
@@ -854,8 +862,17 @@ module Data.Astro.Moon
 
 -- | Calculate Equatorial Coordinates of the Moon with the given
 --   MoonDetails and at the given JulianDate. It is recommended to use
---   <tt>j2010MoonDetails</tt> as a first parameter.
+--   <a>j2010MoonDetails</a> as a first parameter.
 moonPosition1 :: MoonDetails -> JulianDate -> EquatorialCoordinates1
+
+-- | Calculates the Moon's Distance at the given julian date. Returns
+--   distance to the Moon moonDistance1 :: JulianDate -&gt;
+--   MoonDistanceUnits you can use <tt>mduToKm</tt> (defined in
+--   <a>Data.Astro.Moon.MoonDetails</a>) to convert result to kilometers
+moonDistance1 :: MoonDetails -> JulianDate -> MoonDistanceUnits
+
+-- | Calculate the Moons' angular size at the given distance.
+moonAngularSize :: MoonDistanceUnits -> DecimalDegrees
 
 
 -- | Calculation effects of geocentric parallax.
