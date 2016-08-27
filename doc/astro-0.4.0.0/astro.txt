@@ -871,8 +871,11 @@ moonPosition1 :: MoonDetails -> JulianDate -> EquatorialCoordinates1
 --   <a>Data.Astro.Moon.MoonDetails</a>) to convert result to kilometers
 moonDistance1 :: MoonDetails -> JulianDate -> MoonDistanceUnits
 
--- | Calculate the Moons' angular size at the given distance.
+-- | Calculate the Moon's angular size at the given distance.
 moonAngularSize :: MoonDistanceUnits -> DecimalDegrees
+
+-- | Calculates the Moon's horizontal parallax at the given distance.
+moonHorizontalParallax :: MoonDistanceUnits -> DecimalDegrees
 
 
 -- | Calculation effects of geocentric parallax.

@@ -5175,7 +5175,7 @@ CUIntMax :: Word64 -> CUIntMax
 
 -- | Haskell type representing the C <tt>clock_t</tt> type.
 newtype CClock
-CClock :: Word64 -> CClock
+CClock :: Int64 -> CClock
 
 -- | Haskell type representing the C <tt>time_t</tt> type.
 newtype CTime
@@ -5187,7 +5187,7 @@ CUSeconds :: Word32 -> CUSeconds
 
 -- | Haskell type representing the C <tt>suseconds_t</tt> type.
 newtype CSUSeconds
-CSUSeconds :: Int32 -> CSUSeconds
+CSUSeconds :: Int64 -> CSUSeconds
 
 -- | Haskell type representing the C <tt>float</tt> type.
 newtype CFloat
@@ -7204,11 +7204,11 @@ module Foreign.C
 --   <tt>&lt;sys/types.h&gt;</tt> C header on a POSIX system.
 module System.Posix.Types
 newtype CDev
-CDev :: Int32 -> CDev
+CDev :: Word64 -> CDev
 newtype CIno
 CIno :: Word64 -> CIno
 newtype CMode
-CMode :: Word16 -> CMode
+CMode :: Word32 -> CMode
 newtype COff
 COff :: Int64 -> COff
 newtype CPid
@@ -7218,15 +7218,15 @@ CSsize :: Int64 -> CSsize
 newtype CGid
 CGid :: Word32 -> CGid
 newtype CNlink
-CNlink :: Word16 -> CNlink
+CNlink :: Word64 -> CNlink
 newtype CUid
 CUid :: Word32 -> CUid
 newtype CCc
 CCc :: Word8 -> CCc
 newtype CSpeed
-CSpeed :: Word64 -> CSpeed
+CSpeed :: Word32 -> CSpeed
 newtype CTcflag
-CTcflag :: Word64 -> CTcflag
+CTcflag :: Word32 -> CTcflag
 newtype CRLim
 CRLim :: Word64 -> CRLim
 newtype Fd
