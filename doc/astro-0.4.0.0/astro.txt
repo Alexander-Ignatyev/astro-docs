@@ -642,8 +642,10 @@ planetPhase1 :: PlanetDetails -> PlanetDetails -> JulianDate -> Double
 planetPertubations :: Planet -> JulianDate -> DecimalDegrees
 
 -- | Calculate the planet's position-angle of the bright limb. It takes the
---   planet's coordinates and the Sun's coordinates.
-planetPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
+--   planet's coordinates and the Sun's coordinates. Position-angle is the
+--   angle of the midpoint of the illuminated limb measured eastwards from
+--   the north point of the disk.
+planetBrightLimbPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
 
 
 -- | Planet calculations.
@@ -721,8 +723,10 @@ planetAngularDiameter :: PlanetDetails -> AstronomicalUnits -> DecimalDegrees
 planetPhase1 :: PlanetDetails -> PlanetDetails -> JulianDate -> Double
 
 -- | Calculate the planet's position-angle of the bright limb. It takes the
---   planet's coordinates and the Sun's coordinates.
-planetPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
+--   planet's coordinates and the Sun's coordinates. Position-angle is the
+--   angle of the midpoint of the illuminated limb measured eastwards from
+--   the north point of the disk.
+planetBrightLimbPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
 
 
 -- | Computations characteristics of selestial objects.
@@ -888,6 +892,12 @@ moonHorizontalParallax :: MoonDistanceUnits -> DecimalDegrees
 -- | Calculates the Moon's phase (the area of the visible segment expressed
 --   as a fraction of the whole disk) at the given universal time.
 moonPhase :: MoonDetails -> JulianDate -> Double
+
+-- | Calculate the Moon's position-angle of the bright limb. It takes the
+--   Moon's coordinates and the Sun's coordinates. Position-angle is the
+--   angle of the midpoint of the illuminated limb measured eastwards from
+--   the north point of the disk.
+moonBrightLimbPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
 
 
 -- | Calculation effects of geocentric parallax.
