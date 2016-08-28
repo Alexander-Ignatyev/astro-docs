@@ -877,6 +877,10 @@ moonAngularSize :: MoonDistanceUnits -> DecimalDegrees
 -- | Calculates the Moon's horizontal parallax at the given distance.
 moonHorizontalParallax :: MoonDistanceUnits -> DecimalDegrees
 
+-- | Calculates the Moon's phase (the area of the visible segment expressed
+--   as a fraction of the whole disk) at the given universal time.
+moonPhase :: MoonDetails -> JulianDate -> Double
+
 
 -- | Calculation effects of geocentric parallax.
 module Data.Astro.Effects.Parallax
