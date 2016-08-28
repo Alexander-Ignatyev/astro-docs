@@ -641,6 +641,10 @@ planetPhase1 :: PlanetDetails -> PlanetDetails -> JulianDate -> Double
 --   heliocentric longitude).
 planetPertubations :: Planet -> JulianDate -> DecimalDegrees
 
+-- | Calculate the planet's position-angle of the bright limb. It takes the
+--   planet's coordinates and the Sun's coordinates.
+planetPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
+
 
 -- | Planet calculations.
 module Data.Astro.Planet
@@ -715,6 +719,10 @@ planetAngularDiameter :: PlanetDetails -> AstronomicalUnits -> DecimalDegrees
 --   details, the Earth's details and the julian date. Returns fraction
 --   values from 0 to 1.
 planetPhase1 :: PlanetDetails -> PlanetDetails -> JulianDate -> Double
+
+-- | Calculate the planet's position-angle of the bright limb. It takes the
+--   planet's coordinates and the Sun's coordinates.
+planetPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
 
 
 -- | Computations characteristics of selestial objects.
