@@ -572,6 +572,18 @@ instance GHC.Classes.Eq Data.Astro.Coordinate.HorizonCoordinates
 instance GHC.Show.Show Data.Astro.Coordinate.HorizonCoordinates
 
 
+-- | Computations characteristics of selestial objects.
+module Data.Astro.CelestialObject
+
+-- | Calculate angle between two celestial objects whose coordinates
+--   specified in Equatorial Coordinate System.
+angleEquatorial :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
+
+-- | Calculate angle between two celestial objects whose coordinates
+--   specified in Ecliptic Coordinate System.
+angleEcliptic :: EclipticCoordinates -> EclipticCoordinates -> DecimalDegrees
+
+
 -- | Planet mechanics.
 module Data.Astro.Planet.PlanetMechanics
 
@@ -729,8 +741,8 @@ planetPhase1 :: PlanetDetails -> PlanetDetails -> JulianDate -> Double
 planetBrightLimbPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
 
 
--- | Computations characteristics of selestial objects.
-module Data.Astro.CelestialObject
+-- | Computations rise and set of selestial objects.
+module Data.Astro.CelestialObject.RiseSet
 
 -- | Some Info of Rise and Set of a celestial object
 data RiseSet a
@@ -753,13 +765,9 @@ type RiseSetLST = RiseSet (RSInfo LocalSiderealTime)
 -- | Local Civil Time and Azimuth of Rise and Set
 type RiseSetLCT = RiseSet (RSInfo LocalCivilTime)
 
--- | Calculate angle between two celestial objects whose coordinates
---   specified in Equatorial Coordinate System.
-angleEquatorial :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
-
--- | Calculate angle between two celestial objects whose coordinates
---   specified in Ecliptic Coordinate System.
-angleEcliptic :: EclipticCoordinates -> EclipticCoordinates -> DecimalDegrees
+-- | The optional Rise And optinal Set Information (LocalCivilTime and
+--   Azimuth)
+type RiseSetMB = RiseSet (Maybe (RSInfo LocalCivilTime))
 
 -- | Calculate rise and set local sidereal time of a celestial object. It
 --   takes the equatorial coordinates of the celestial object, vertical
@@ -770,11 +778,22 @@ angleEcliptic :: EclipticCoordinates -> EclipticCoordinates -> DecimalDegrees
 --   1012').
 riseAndSet :: EquatorialCoordinates1 -> DecimalDegrees -> DecimalDegrees -> RiseSetLST
 
+-- | Calculate rise and set local sidereal time of a celestial object that
+--   changes its equatorial coordinates during the day (the Sun, the Moon,
+--   planets). It takes epsilon, the function that returns equatorial
+--   coordinates of the celestial object for a given julian date, vertical
+--   shift and the latitude of the observation. To calculate <i>vertical
+--   shift</i> for stars use function <tt>refract</tt> from
+--   <a>Data.Astro.Effects</a>. In most cases you can assume that
+--   <i>vertical shift</i> equals 0.566569 (34 arcmins ~ 'refract (DD 0) 12
+--   1012').
+riseAndSet2 :: DecimalHours -> (JulianDate -> EquatorialCoordinates1) -> GeographicCoordinates -> DecimalDegrees -> LocalCivilDate -> RiseSetMB
+
 -- | Converts Rise and Set in Local Sidereal Time to Rise and Set in Local
 --   Civil Time.
 toRiseSetLCT :: DecimalDegrees -> LocalCivilDate -> RiseSetLST -> RiseSetLCT
-instance GHC.Classes.Eq a => GHC.Classes.Eq (Data.Astro.CelestialObject.RiseSet a)
-instance GHC.Show.Show a => GHC.Show.Show (Data.Astro.CelestialObject.RiseSet a)
+instance GHC.Classes.Eq a => GHC.Classes.Eq (Data.Astro.CelestialObject.RiseSet.RiseSet a)
+instance GHC.Show.Show a => GHC.Show.Show (Data.Astro.CelestialObject.RiseSet.RiseSet a)
 
 
 -- | <h2>Calculation characteristics of the Sun.</h2>
@@ -818,8 +837,9 @@ Circumpolar :: RiseSet a
 -- | The celestial object is always below the horizon
 NeverRises :: RiseSet a
 
--- | The Sun's Rise And Set Information (LocalCivilTime and Azimuth)
-type SunRiseSet = RiseSet (Maybe (RSInfo LocalCivilTime))
+-- | The Sun's Rise And Set Information (LocalCivilTime and Azimuth) type
+--   SunRiseSet = RiseSet (Maybe (RSInfo LocalCivilTime))
+type SunRiseSet = RiseSetMB
 
 -- | Calculate SunDetails for the given JulianDate.
 sunDetails :: JulianDate -> SunDetails
@@ -855,7 +875,7 @@ sunAngularSize :: JulianDate -> DecimalDegrees
 --   local civil date, vertical shift (good value is 0.833333). It returns
 --   Nothing if fails to calculate rise and/or set. It should be accurate
 --   to within a minute of time.
-sunRiseAndSet :: GeographicCoordinates -> DecimalDegrees -> LocalCivilDate -> SunRiseSet
+sunRiseAndSet :: GeographicCoordinates -> DecimalDegrees -> LocalCivilDate -> RiseSetMB
 
 -- | Calculates discrepancy between the mean solar time and real solar time
 --   at the given date.
