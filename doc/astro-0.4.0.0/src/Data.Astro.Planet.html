@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">{-|
+Module: Data.Astro.Planet
+Description: Planet calculations
+Copyright: Alexander Ignatyev, 2016
+
+Planet calculations.
+-}</span><span>
+</span><a name="line-8"></a><span>
+</span><a name="line-9"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Planet</span><span>
+</span><a name="line-10"></a><span class="hs-special">(</span><span>
+</span><a name="line-11"></a><span>  </span><a href="Data.Astro.Planet.PlanetDetails.html#Planet"><span class="hs-identifier hs-type">Details</span><span class="hs-operator hs-type">.</span><span class="hs-identifier hs-type">Planet</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-12"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetDetails.html#PlanetDetails"><span class="hs-identifier hs-type">Details</span><span class="hs-operator hs-type">.</span><span class="hs-identifier hs-type">PlanetDetails</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-13"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetDetails.html#j2010PlanetDetails"><span class="hs-identifier hs-var">Details</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">j2010PlanetDetails</span></a><span>
+</span><a name="line-14"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetTrueAnomaly1"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetTrueAnomaly1</span></a><span>
+</span><a name="line-15"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetPosition"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetPosition</span></a><span>
+</span><a name="line-16"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetPosition1"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetPosition1</span></a><span>
+</span><a name="line-17"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetDistance1"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetDistance1</span></a><span>
+</span><a name="line-18"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetAngularDiameter"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetAngularDiameter</span></a><span>
+</span><a name="line-19"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetPhase1"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetPhase1</span></a><span>
+</span><a name="line-20"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetBrightLimbPositionAngle"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetBrightLimbPositionAngle</span></a><span>
+</span><a name="line-21"></a><span class="hs-special">)</span><span>
+</span><a name="line-22"></a><span>
+</span><a name="line-23"></a><span class="hs-keyword">where</span><span>
+</span><a name="line-24"></a><span>
+</span><a name="line-25"></a><span>
+</span><a name="line-26"></a><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><a href="Data.Astro.Planet.PlanetDetails.html"><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Planet</span><span class="hs-operator">.</span><span class="hs-identifier">PlanetDetails</span></a><span> </span><span class="hs-keyword">as</span><span> </span><span class="hs-identifier">Details</span><span>
+</span><a name="line-27"></a><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html"><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Planet</span><span class="hs-operator">.</span><span class="hs-identifier">PlanetMechanics</span></a><span> </span><span class="hs-keyword">as</span><span> </span><span class="hs-identifier">Mechanics</span><span>
+</span><a name="line-28"></a></pre></body></html>
