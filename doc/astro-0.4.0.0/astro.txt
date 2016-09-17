@@ -837,10 +837,6 @@ Circumpolar :: RiseSet a
 -- | The celestial object is always below the horizon
 NeverRises :: RiseSet a
 
--- | The Sun's Rise And Set Information (LocalCivilTime and Azimuth) type
---   SunRiseSet = RiseSet (Maybe (RSInfo LocalCivilTime))
-type SunRiseSet = RiseSetMB
-
 -- | Calculate SunDetails for the given JulianDate.
 sunDetails :: JulianDate -> SunDetails
 
@@ -885,7 +881,6 @@ equationOfTime :: JulianDate -> DecimalHours
 --   celestial object specified by the given coordinates at the given
 --   Universal Time.
 solarElongation :: EquatorialCoordinates1 -> JulianDate -> DecimalDegrees
-instance GHC.Classes.Eq Data.Astro.Sun.SetOrRise
 instance GHC.Show.Show Data.Astro.Sun.SunDetails
 
 
