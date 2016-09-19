@@ -140,6 +140,9 @@ module Data.Astro.Time.JulianDate
 newtype JulianDate
 JD :: TimeBaseType -> JulianDate
 
+-- | Beginning of the Julian Period
+julianStartDateTime :: JulianDate
+
 -- | Represents Local Civil Time
 data LocalCivilTime
 LCT :: DecimalHours -> JulianDate -> LocalCivilTime
@@ -190,6 +193,9 @@ lctFromYMDHMS :: DecimalHours -> Integer -> Int -> Int -> Int -> Int -> TimeBase
 --   hours, local minutes and local secunds.
 lctToYMDHMS :: LocalCivilTime -> (Integer, Int, Int, Int, Int, TimeBaseType)
 lcdFromYMD :: DecimalHours -> Integer -> Int -> Int -> LocalCivilDate
+
+-- | Print local civil time in machine readable format
+printLctHs :: LocalCivilTime -> String
 instance GHC.Classes.Eq Data.Astro.Time.JulianDate.LocalCivilDate
 instance GHC.Classes.Eq Data.Astro.Time.JulianDate.LocalCivilTime
 instance GHC.Classes.Eq Data.Astro.Time.JulianDate.JulianDate
