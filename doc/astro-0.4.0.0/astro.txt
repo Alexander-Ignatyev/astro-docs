@@ -835,6 +835,12 @@ data Star
 Polaris :: Star
 AlphaCrucis :: Star
 Sirius :: Star
+Betelgeuse :: Star
+Rigel :: Star
+Vega :: Star
+Antares :: Star
+Canopus :: Star
+Pleiades :: Star
 
 -- | Returns Equatorial Coordinates for the given star
 starCoordinates :: Star -> EquatorialCoordinates1
