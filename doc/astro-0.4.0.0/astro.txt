@@ -890,6 +890,11 @@ riseAndSet :: EquatorialCoordinates1 -> DecimalDegrees -> DecimalDegrees -> Rise
 --   1012').
 riseAndSet2 :: DecimalHours -> (JulianDate -> EquatorialCoordinates1) -> GeographicCoordinates -> DecimalDegrees -> LocalCivilDate -> RiseSetMB
 
+-- | Calculates set and rise of the celestial object It takes geographic
+--   coordinates of the observer, local civil date, vertical shift and
+--   equatorial coordinates of the celestial object.
+riseAndSetLCT :: GeographicCoordinates -> LocalCivilDate -> DecimalDegrees -> EquatorialCoordinates1 -> RiseSetLCT
+
 -- | Converts Rise and Set in Local Sidereal Time to Rise and Set in Local
 --   Civil Time. It takes longutude of the observer and local civil date.
 --   To calculate <i>vertical shift</i> for stars use function
