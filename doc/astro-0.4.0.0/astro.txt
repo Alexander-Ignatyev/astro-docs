@@ -827,6 +827,21 @@ planetPhase1 :: PlanetDetails -> PlanetDetails -> JulianDate -> Double
 planetBrightLimbPositionAngle :: EquatorialCoordinates1 -> EquatorialCoordinates1 -> DecimalDegrees
 
 
+-- | Stars.
+module Data.Astro.Star
+
+-- | Some of the stars
+data Star
+Polaris :: Star
+AlphaCrucis :: Star
+Sirius :: Star
+
+-- | Returns Equatorial Coordinates for the given star
+starCoordinates :: Star -> EquatorialCoordinates1
+instance GHC.Classes.Eq Data.Astro.Star.Star
+instance GHC.Show.Show Data.Astro.Star.Star
+
+
 -- | Computations rise and set of selestial objects.
 module Data.Astro.CelestialObject.RiseSet
 
@@ -876,7 +891,11 @@ riseAndSet :: EquatorialCoordinates1 -> DecimalDegrees -> DecimalDegrees -> Rise
 riseAndSet2 :: DecimalHours -> (JulianDate -> EquatorialCoordinates1) -> GeographicCoordinates -> DecimalDegrees -> LocalCivilDate -> RiseSetMB
 
 -- | Converts Rise and Set in Local Sidereal Time to Rise and Set in Local
---   Civil Time.
+--   Civil Time. It takes longutude of the observer and local civil date.
+--   To calculate <i>vertical shift</i> for stars use function
+--   <tt>refract</tt> from <a>Data.Astro.Effects</a>. In most cases you can
+--   assume that <i>vertical shift</i> equals 0.566569 (34 arcmins ~
+--   'refract (DD 0) 12 1012').
 toRiseSetLCT :: DecimalDegrees -> LocalCivilDate -> RiseSetLST -> RiseSetLCT
 instance GHC.Classes.Eq a => GHC.Classes.Eq (Data.Astro.CelestialObject.RiseSet.RiseSet a)
 instance GHC.Show.Show a => GHC.Show.Show (Data.Astro.CelestialObject.RiseSet.RiseSet a)
