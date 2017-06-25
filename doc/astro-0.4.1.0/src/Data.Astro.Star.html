@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">{-|
+Module: Data.Astro.Star
+Description: Stars
+Copyright: Alexander Ignatyev, 2017
+
+Stars.
+
+= Examples
+
+== /Location/
+
+@
+import Data.Astro.Time.JulianDate
+import Data.Astro.Coordinate
+import Data.Astro.Types
+import Data.Astro.Star
+
+
+ro :: GeographicCoordinates
+ro = GeoC (fromDMS 51 28 40) (-(fromDMS 0 0 5))
+
+dt :: LocalCivilTime
+dt = lctFromYMDHMS (DH 1) 2017 6 25 10 29 0
+
+-- Calculate location of Betelgeuse
+
+betelgeuseEC1 :: EquatorialCoordinates1
+betelgeuseEC1 = starCoordinates Betelgeuse
+-- EC1 {e1Declination = DD 7.407064, e1RightAscension = DH 5.919529}
+
+betelgeuseHC :: HorizonCoordinates
+betelgeuseHC = ec1ToHC ro (lctUniversalTime dt) betelgeuseEC1
+-- HC {hAltitude = DD 38.30483892505852, hAzimuth = DD 136.75755644642248}
+@
+
+== /Rise and Set/
+
+@
+import Data.Astro.Time.JulianDate
+import Data.Astro.Coordinate
+import Data.Astro.Types
+import Data.Astro.Effects
+import Data.Astro.CelestialObject.RiseSet
+import Data.Astro.Star
+
+
+ro :: GeographicCoordinates
+ro = GeoC (fromDMS 51 28 40) (-(fromDMS 0 0 5))
+
+today :: LocalCivilDate
+today = lcdFromYMD (DH 1) 2017 6 25
+
+-- Calculate location of Betelgeuse
+
+rigelEC1 :: EquatorialCoordinates1
+rigelEC1 = starCoordinates Rigel
+
+verticalShift :: DecimalDegrees
+verticalShift = refract (DD 0) 12 1012
+-- DD 0.5660098245614035
+
+rigelRiseSet :: RiseSetLCT
+rigelRiseSet = riseAndSetLCT ro today verticalShift rigelEC1
+-- RiseSet (2017-06-25 06:38:18.4713 +1.0,DD 102.51249855335433) (2017-06-25 17:20:33.4902 +1.0,DD 257.48750144664564)
+@
+-}</span><span>
+</span><a name="line-67"></a><span>
+</span><a name="line-68"></a><span>
+</span><a name="line-69"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Star</span><span>
+</span><a name="line-70"></a><span class="hs-special">(</span><span>
+</span><a name="line-71"></a><span>  </span><a href="Data.Astro.Star.html#Star"><span class="hs-identifier hs-type">Star</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-72"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Star.html#starCoordinates"><span class="hs-identifier hs-var">starCoordinates</span></a><span>
+</span><a name="line-73"></a><span class="hs-special">)</span><span>
+</span><a name="line-74"></a><span>
+</span><a name="line-75"></a><span class="hs-keyword">where</span><span>
+</span><a name="line-76"></a><span>
+</span><a name="line-77"></a><span class="hs-keyword">import</span><span> </span><a href="Data.Astro.Coordinate.html"><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Coordinate</span></a><span> </span><span class="hs-special">(</span><a href="Data.Astro.Coordinate.html#EquatorialCoordinates1"><span class="hs-identifier hs-type">EquatorialCoordinates1</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span class="hs-special">)</span><span>
+</span><a name="line-78"></a><span class="hs-keyword">import</span><span> </span><a href="Data.Astro.Types.html"><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Types</span></a><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span class="hs-special">,</span><span> </span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span class="hs-special">)</span><span>
+</span><a name="line-79"></a><span>
+</span><a name="line-80"></a><span>
+</span><a name="line-81"></a><span class="hs-comment">-- | Some of the stars</span><span>
+</span><a name="line-82"></a><span class="hs-keyword">data</span><span> </span><a name="Star"><a href="Data.Astro.Star.html#Star"><span class="hs-identifier">Star</span></a></a><span> </span><span class="hs-glyph">=</span><span> </span><a name="Polaris"><a href="Data.Astro.Star.html#Polaris"><span class="hs-identifier">Polaris</span></a></a><span>
+</span><a name="line-83"></a><span>            </span><span class="hs-glyph">|</span><span> </span><a name="AlphaCrucis"><a href="Data.Astro.Star.html#AlphaCrucis"><span class="hs-identifier">AlphaCrucis</span></a></a><span>
+</span><a name="line-84"></a><span>            </span><span class="hs-glyph">|</span><span> </span><a name="Sirius"><a href="Data.Astro.Star.html#Sirius"><span class="hs-identifier">Sirius</span></a></a><span>
+</span><a name="line-85"></a><span>            </span><span class="hs-glyph">|</span><span> </span><a name="Betelgeuse"><a href="Data.Astro.Star.html#Betelgeuse"><span class="hs-identifier">Betelgeuse</span></a></a><span>
+</span><a name="line-86"></a><span>            </span><span class="hs-glyph">|</span><span> </span><a name="Rigel"><a href="Data.Astro.Star.html#Rigel"><span class="hs-identifier">Rigel</span></a></a><span>
+</span><a name="line-87"></a><span>            </span><span class="hs-glyph">|</span><span> </span><a name="Vega"><a href="Data.Astro.Star.html#Vega"><span class="hs-identifier">Vega</span></a></a><span>
+</span><a name="line-88"></a><span>            </span><span class="hs-glyph">|</span><span> </span><a name="Antares"><a href="Data.Astro.Star.html#Antares"><span class="hs-identifier">Antares</span></a></a><span>
+</span><a name="line-89"></a><span>            </span><span class="hs-glyph">|</span><span> </span><a name="Canopus"><a href="Data.Astro.Star.html#Canopus"><span class="hs-identifier">Canopus</span></a></a><span>
+</span><a name="line-90"></a><span>            </span><span class="hs-glyph">|</span><span> </span><a name="Pleiades"><a href="Data.Astro.Star.html#Pleiades"><span class="hs-identifier">Pleiades</span></a></a><span>
+</span><a name="line-91"></a><span>              </span><span class="hs-keyword">deriving</span><span> </span><span class="hs-special">(</span><span class="hs-identifier hs-type">Show</span><span class="hs-special">,</span><span> </span><span class="hs-identifier hs-type">Eq</span><span class="hs-special">)</span><span>
+</span><a name="line-92"></a><span>
+</span><a name="line-93"></a><span>
+</span><a name="line-94"></a><span class="hs-comment">-- | Returns Equatorial Coordinates for the given star</span><span>
+</span><a name="line-95"></a><span class="hs-identifier">starCoordinates</span><span> </span><span class="hs-glyph">::</span><span> </span><a href="Data.Astro.Star.html#Star"><span class="hs-identifier hs-type">Star</span></a><span> </span><span class="hs-glyph">-&gt;</span><span> </span><a href="Data.Astro.Coordinate.html#EquatorialCoordinates1"><span class="hs-identifier hs-type">EquatorialCoordinates1</span></a><span>
+</span><a name="line-96"></a><a name="starCoordinates"><a href="Data.Astro.Star.html#starCoordinates"><span class="hs-identifier">starCoordinates</span></a></a><span> </span><a href="Data.Astro.Star.html#Polaris"><span class="hs-identifier hs-var">Polaris</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">89</span><span> </span><span class="hs-number">15</span><span> </span><span class="hs-number">51</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">2</span><span> </span><span class="hs-number">31</span><span> </span><span class="hs-number">48.7</span><span class="hs-special">)</span><span>
+</span><a name="line-97"></a><span class="hs-identifier">starCoordinates</span><span> </span><a href="Data.Astro.Star.html#AlphaCrucis"><span class="hs-identifier hs-var">AlphaCrucis</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><span class="hs-glyph">-</span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">63</span><span> </span><span class="hs-number">5</span><span> </span><span class="hs-number">56.73</span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">12</span><span> </span><span class="hs-number">26</span><span> </span><span class="hs-number">35.9</span><span class="hs-special">)</span><span>
+</span><a name="line-98"></a><span class="hs-identifier">starCoordinates</span><span> </span><a href="Data.Astro.Star.html#Sirius"><span class="hs-identifier hs-var">Sirius</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><span class="hs-glyph">-</span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">16</span><span> </span><span class="hs-number">42</span><span> </span><span class="hs-number">58.02</span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">6</span><span> </span><span class="hs-number">45</span><span> </span><span class="hs-number">8.92</span><span class="hs-special">)</span><span>
+</span><a name="line-99"></a><span class="hs-identifier">starCoordinates</span><span> </span><a href="Data.Astro.Star.html#Betelgeuse"><span class="hs-identifier hs-var">Betelgeuse</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">07</span><span> </span><span class="hs-number">24</span><span> </span><span class="hs-number">25.4304</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">5</span><span> </span><span class="hs-number">55</span><span> </span><span class="hs-number">10.30536</span><span class="hs-special">)</span><span>
+</span><a name="line-100"></a><span class="hs-identifier">starCoordinates</span><span> </span><a href="Data.Astro.Star.html#Rigel"><span class="hs-identifier hs-var">Rigel</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><span class="hs-glyph">-</span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">8</span><span> </span><span class="hs-number">12</span><span> </span><span class="hs-number">05.8981</span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">5</span><span> </span><span class="hs-number">14</span><span> </span><span class="hs-number">32.27210</span><span class="hs-special">)</span><span>
+</span><a name="line-101"></a><span class="hs-identifier">starCoordinates</span><span> </span><a href="Data.Astro.Star.html#Vega"><span class="hs-identifier hs-var">Vega</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">38</span><span> </span><span class="hs-number">47</span><span> </span><span class="hs-number">01.2802</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">18</span><span> </span><span class="hs-number">36</span><span> </span><span class="hs-number">56.33635</span><span class="hs-special">)</span><span>
+</span><a name="line-102"></a><span class="hs-identifier">starCoordinates</span><span> </span><a href="Data.Astro.Star.html#Antares"><span class="hs-identifier hs-var">Antares</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><span class="hs-glyph">-</span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">26</span><span> </span><span class="hs-number">25</span><span> </span><span class="hs-number">55.2094</span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">16</span><span> </span><span class="hs-number">29</span><span> </span><span class="hs-number">24.45970</span><span class="hs-special">)</span><span>
+</span><a name="line-103"></a><span class="hs-identifier">starCoordinates</span><span> </span><a href="Data.Astro.Star.html#Canopus"><span class="hs-identifier hs-var">Canopus</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><span class="hs-glyph">-</span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">52</span><span> </span><span class="hs-number">41</span><span> </span><span class="hs-number">44.3810</span><span class="hs-special">)</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">6</span><span> </span><span class="hs-number">23</span><span> </span><span class="hs-number">57.10988</span><span class="hs-special">)</span><span>
+</span><a name="line-104"></a><span class="hs-identifier">starCoordinates</span><span> </span><a href="Data.Astro.Star.html#Pleiades"><span class="hs-identifier hs-var">Pleiades</span></a><span> </span><span class="hs-glyph">=</span><span> </span><a href="Data.Astro.Coordinate.html#EC1"><span class="hs-identifier hs-var">EC1</span></a><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromDMS"><span class="hs-identifier hs-var">fromDMS</span></a><span> </span><span class="hs-number">24</span><span> </span><span class="hs-number">7</span><span> </span><span class="hs-number">00</span><span class="hs-special">)</span><span> </span><span class="hs-special">(</span><a href="Data.Astro.Types.html#fromHMS"><span class="hs-identifier hs-var">fromHMS</span></a><span> </span><span class="hs-number">3</span><span> </span><span class="hs-number">47</span><span> </span><span class="hs-number">24</span><span class="hs-special">)</span><span>
+</span><a name="line-105"></a></pre></body></html>

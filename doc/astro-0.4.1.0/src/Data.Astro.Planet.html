@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" type="text/css" href="style.css" /><script type="text/javascript" src="highlight.js"></script></head><body><pre><span class="hs-comment">{-|
+Module: Data.Astro.Planet
+Description: Planet calculations
+Copyright: Alexander Ignatyev, 2016
+
+Planet calculations.
+
+= Example
+
+=== /Initialisation/
+
+@
+import Data.Astro.Time.JulianDate
+import Data.Astro.Coordinate
+import Data.Astro.Types
+import Data.Astro.Effects
+import Data.Astro.CelestialObject.RiseSet
+import Data.Astro.Planet
+
+ro :: GeographicCoordinates
+ro = GeoC (fromDMS 51 28 40) (-(fromDMS 0 0 5))
+
+dt :: LocalCivilTime
+dt = lctFromYMDHMS (DH 1) 2017 6 25 10 29 0
+
+today :: LocalCivilDate
+today = lcdFromYMD (DH 1) 2017 6 25
+
+jupiterDetails :: PlanetDetails
+jupiterDetails = j2010PlanetDetails Jupiter
+
+earthDetails :: PlanetDetails
+earthDetails = j2010PlanetDetails Earth
+
+jupiterPosition :: JulianDate -&gt; EquatorialCoordinates1
+jupiterPosition = planetPosition planetTrueAnomaly1 jupiterDetails earthDetails
+@
+
+=== /Calcaulate Coordinates/
+@
+jupiterEC1 :: EquatorialCoordinates1
+jupiterEC1 = jupiterPosition (lctUniversalTime dt)
+-- EC1 {e1Declination = DD (-4.104626810672402), e1RightAscension = DH 12.863365504382228}
+
+jupiterHC :: HorizonCoordinates
+jupiterHC = ec1ToHC ro (lctUniversalTime dt) jupiterEC1
+-- HC {hAltitude = DD (-30.67914598469227), hAzimuth = DD 52.29376845044007}
+@
+
+=== /Calculate Distance/
+@
+jupiterDistance :: AstronomicalUnits
+jupiterDistance = planetDistance1 jupiterDetails earthDetails (lctUniversalTime dt)
+-- AU 5.193435872521039
+@
+
+=== /Calculate Angular Size/
+@
+jupiterAngularSize :: DecimalDegrees
+jupiterAngularSize = planetAngularDiameter jupiterDetails jupiterDistance
+-- DD 1.052289877865987e-2
+
+toDMS jupiterAngularSize
+-- (0,0,37.88243560317554)
+@
+
+=== /Calculate Rise and Set/
+
+@
+verticalShift :: DecimalDegrees
+verticalShift = refract (DD 0) 12 1012
+-- DD 0.5660098245614035
+
+jupiterRiseSet :: RiseSetMB
+jupiterRiseSet = riseAndSet2 0.000001 jupiterPosition ro verticalShift today
+-- RiseSet
+--    (Just (2017-06-25 13:53:27.3109 +1.0,DD 95.88943953535569))
+--    (Just (2017-06-25 01:21:23.5835 +1.0,DD 264.1289033612776))
+@
+-}</span><span>
+</span><a name="line-81"></a><span>
+</span><a name="line-82"></a><span class="hs-keyword">module</span><span> </span><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Planet</span><span>
+</span><a name="line-83"></a><span class="hs-special">(</span><span>
+</span><a name="line-84"></a><span>  </span><a href="Data.Astro.Planet.PlanetDetails.html#Planet"><span class="hs-identifier hs-type">Details</span><span class="hs-operator hs-type">.</span><span class="hs-identifier hs-type">Planet</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-85"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetDetails.html#PlanetDetails"><span class="hs-identifier hs-type">Details</span><span class="hs-operator hs-type">.</span><span class="hs-identifier hs-type">PlanetDetails</span></a><span class="hs-special">(</span><span class="hs-glyph">..</span><span class="hs-special">)</span><span>
+</span><a name="line-86"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetDetails.html#j2010PlanetDetails"><span class="hs-identifier hs-var">Details</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">j2010PlanetDetails</span></a><span>
+</span><a name="line-87"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetTrueAnomaly1"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetTrueAnomaly1</span></a><span>
+</span><a name="line-88"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetPosition"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetPosition</span></a><span>
+</span><a name="line-89"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetPosition1"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetPosition1</span></a><span>
+</span><a name="line-90"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetDistance1"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetDistance1</span></a><span>
+</span><a name="line-91"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetAngularDiameter"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetAngularDiameter</span></a><span>
+</span><a name="line-92"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetPhase1"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetPhase1</span></a><span>
+</span><a name="line-93"></a><span>  </span><span class="hs-special">,</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html#planetBrightLimbPositionAngle"><span class="hs-identifier hs-var">Mechanics</span><span class="hs-operator hs-var">.</span><span class="hs-identifier hs-var">planetBrightLimbPositionAngle</span></a><span>
+</span><a name="line-94"></a><span class="hs-special">)</span><span>
+</span><a name="line-95"></a><span>
+</span><a name="line-96"></a><span class="hs-keyword">where</span><span>
+</span><a name="line-97"></a><span>
+</span><a name="line-98"></a><span>
+</span><a name="line-99"></a><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><a href="Data.Astro.Planet.PlanetDetails.html"><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Planet</span><span class="hs-operator">.</span><span class="hs-identifier">PlanetDetails</span></a><span> </span><span class="hs-keyword">as</span><span> </span><span class="hs-identifier">Details</span><span>
+</span><a name="line-100"></a><span class="hs-keyword">import</span><span> </span><span class="hs-keyword">qualified</span><span> </span><a href="Data.Astro.Planet.PlanetMechanics.html"><span class="hs-identifier">Data</span><span class="hs-operator">.</span><span class="hs-identifier">Astro</span><span class="hs-operator">.</span><span class="hs-identifier">Planet</span><span class="hs-operator">.</span><span class="hs-identifier">PlanetMechanics</span></a><span> </span><span class="hs-keyword">as</span><span> </span><span class="hs-identifier">Mechanics</span><span>
+</span><a name="line-101"></a></pre></body></html>
