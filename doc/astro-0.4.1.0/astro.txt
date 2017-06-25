@@ -628,7 +628,6 @@ instance GHC.Show.Show Data.Astro.Moon.MoonDetails.MoonDetails
 --   <h3><i>Function-shortcuts</i></h3>
 --   
 --   <pre>
---   ```haskell
 --   import Data.Astro.Time.JulianDate
 --   import Data.Astro.Coordinate
 --   import Data.Astro.Types
@@ -650,7 +649,6 @@ instance GHC.Show.Show Data.Astro.Moon.MoonDetails.MoonDetails
 --   sunHC' :: HorizonCoordinates
 --   sunHC' = ec1ToHC ro (lctUniversalTime dt) sunEC1
 --   -- HC {hAltitude = DD 49.30604722222222, hAzimuth = DD 118.92209166666666}
---   ```
 --   </pre>
 module Data.Astro.Coordinate
 newtype DecimalDegrees
