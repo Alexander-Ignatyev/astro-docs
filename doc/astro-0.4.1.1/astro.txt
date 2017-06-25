@@ -2,7 +2,7 @@
 -- See Hoogle, http://www.haskell.org/hoogle/
 
 
--- | Astro
+-- | Amateur astronomical computations
 --   
 --   Please see README.md
 @package astro
