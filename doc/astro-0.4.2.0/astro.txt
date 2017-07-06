@@ -1462,18 +1462,20 @@ instance GHC.Show.Show Data.Astro.Sun.SunDetails
 module Data.Astro.Moon
 
 -- | Calculate Equatorial Coordinates of the Moon with the given
---   MoonDetails and at the given JulianDate. It is recommended to use
---   <a>j2010MoonDetails</a> as a first parameter.
+--   MoonDetails and at the given JulianDate.
+--   
+--   It is recommended to use <a>j2010MoonDetails</a> as a first parameter.
 moonPosition1 :: MoonDetails -> JulianDate -> EquatorialCoordinates1
 
 -- | Calculate Equatorial Coordinates of the Moon with the given
 --   MoonDetails, distance to the Moon, geographic coordinates of the
 --   onserver, height above sea-level of the observer measured in metres
 --   (20 is a good reasonable value for the height) and at the given
---   JulianDate. It is recommended to use <a>j2010MoonDetails</a> as a
---   first parameter, to obtain the distance to the Moon you can use
---   <a>moonDistance1</a> function. <a>moonPosition2</a> takes into account
---   parallax effect.
+--   JulianDate.
+--   
+--   It is recommended to use <a>j2010MoonDetails</a> as a first parameter,
+--   to obtain the distance to the Moon you can use <a>moonDistance1</a>
+--   function. <a>moonPosition2</a> takes into account parallax effect.
 moonPosition2 :: MoonDetails -> MoonDistanceUnits -> GeographicCoordinates -> Double -> JulianDate -> EquatorialCoordinates1
 
 -- | Calculates the Moon's Distance at the given julian date. Returns
