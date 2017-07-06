@@ -98,6 +98,12 @@ AU :: Double -> AstronomicalUnits
 -- | Light travel time of the distance in Astronomical Units
 lightTravelTime :: AstronomicalUnits -> DecimalHours
 
+-- | Convert from kilometers to Astronomical Units
+kmToAU :: Double -> AstronomicalUnits
+
+-- | Comvert from Astronomical Units to kilometers
+auToKM :: AstronomicalUnits -> Double
+
 -- | Convert decimal degrees to decimal hours
 toDecimalHours :: DecimalDegrees -> DecimalHours
 
