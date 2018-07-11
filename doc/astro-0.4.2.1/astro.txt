@@ -145,13 +145,13 @@ fromRadians :: Double -> DecimalDegrees
 fromDMS :: RealFrac a => Int -> Int -> a -> DecimalDegrees
 
 -- | Convert DecimalDegrees to Degrees, Minutes, Seconds
-toDMS :: (Integral b, Integral a) => DecimalDegrees -> (a, b, Double)
+toDMS :: (Integral a, Integral b) => DecimalDegrees -> (a, b, Double)
 
 -- | Comvert Hours, Minutes, Seconds to DecimalHours
 fromHMS :: RealFrac a => Int -> Int -> a -> DecimalHours
 
 -- | Convert DecimalDegrees to Degrees, Minutes, Seconds
-toHMS :: (Integral b, Integral a) => DecimalHours -> (a, b, Double)
+toHMS :: (Integral a, Integral b) => DecimalHours -> (a, b, Double)
 instance GHC.Classes.Ord Data.Astro.Types.AstronomicalUnits
 instance GHC.Classes.Eq Data.Astro.Types.AstronomicalUnits
 instance GHC.Show.Show Data.Astro.Types.AstronomicalUnits
