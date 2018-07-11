@@ -299,7 +299,7 @@ module Data.Astro.Time.Epoch
 -- | Epoch B1900.0, 1900 January 0.8135
 b1900 :: JulianDate
 
--- | Epoch B1950.0, January 0.9235
+-- | Epoch B1950.0, 1950 January 0.9235
 b1950 :: JulianDate
 
 -- | Epoch J1900.0 1900 January 0.5
@@ -308,7 +308,7 @@ j1900 :: JulianDate
 -- | Epoch J2000.0, 12h on 1 January 2000
 j2000 :: JulianDate
 
--- | Epoch J2050.0, 12h on 1 January 2000
+-- | Epoch J2050.0, 0h on 1 January 2050
 j2050 :: JulianDate
 
 -- | The Sun's and planets reference Epoch J2010.0 (2010 January 0.0)
