@@ -268,18 +268,18 @@ fromYMDHMS :: Integer -> Int -> Int -> Int -> Int -> TimeBaseType -> JulianDate
 -- | It returns year, month [1..12], Day [1..31], hours, minutes, seconds.
 toYMDHMS :: JulianDate -> (Integer, Int, Int, Int, Int, TimeBaseType)
 
--- | Get Day of the Week 0 is for Sunday, 1 for manday and 6 for Saturday
+-- | Get Day of the Week: 0 is for Sunday, 1 for Monday and 6 for Saturday
 dayOfWeek :: JulianDate -> Int
 
 -- | Extract Day and Time parts of Date
 splitToDayAndTime :: JulianDate -> (JulianDate, JulianDate)
 
 -- | Create LocalCivilTime from tize zone, local year, local month, local
---   day, local hours, local minutes and local secunds.
+--   day, local hours, local minutes and local seconds.
 lctFromYMDHMS :: DecimalHours -> Integer -> Int -> Int -> Int -> Int -> TimeBaseType -> LocalCivilTime
 
 -- | Get from LocalCivilTime local year, local month, local day, local
---   hours, local minutes and local secunds.
+--   hours, local minutes and local seconds.
 lctToYMDHMS :: LocalCivilTime -> (Integer, Int, Int, Int, Int, TimeBaseType)
 lcdFromYMD :: DecimalHours -> Integer -> Int -> Int -> LocalCivilDate
 
