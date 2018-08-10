@@ -873,6 +873,10 @@ planetMeanAnomaly :: PlanetDetails -> JulianDate -> DecimalDegrees
 -- | Calculate the planet true anomaly using approximate method
 planetTrueAnomaly1 :: PlanetDetails -> JulianDate -> DecimalDegrees
 
+-- | Calculate the planet true anomaly using the second 'more accurate'
+--   method
+planetTrueAnomaly2 :: PlanetDetails -> JulianDate -> DecimalDegrees
+
 -- | Calculate Heliocentric Radius Vector. It takes Planet Details and true
 --   anomaly.
 planetHeliocentricRadiusVector :: PlanetDetails -> DecimalDegrees -> AstronomicalUnits
@@ -910,13 +914,18 @@ planetEclipticLatitude :: DecimalDegrees -> DecimalDegrees -> AstronomicalUnits 
 planetPosition :: (PlanetDetails -> JulianDate -> DecimalDegrees) -> PlanetDetails -> PlanetDetails -> JulianDate -> EquatorialCoordinates1
 
 -- | Calculate the planet's postion at the given date using the approximate
---   algoruthm. It takes a function to calculate true anomaly, planet
---   details of the planet, planet details of the Earth and JulianDate.
+--   algoruthm. It takes planet details of the planet, planet details of
+--   the Earth and JulianDate.
 planetPosition1 :: PlanetDetails -> PlanetDetails -> JulianDate -> EquatorialCoordinates1
 
 -- | Calculates the distance betweeth the planet and the Earth at the given
---   date. It takes the planet's detail, the Earth's details and the julian
---   date.
+--   date. It takes a function to calculate true anomaly, planet details of
+--   the planet, planet details of the Earth and JulianDate.
+planetDistance :: (PlanetDetails -> JulianDate -> DecimalDegrees) -> PlanetDetails -> PlanetDetails -> JulianDate -> AstronomicalUnits
+
+-- | Calculates the distance betweeth the planet and the Earth at the given
+--   date using the approximate algoruthm. It takes planet details of the
+--   planet, planet details of the Earth and JulianDate.
 planetDistance1 :: PlanetDetails -> PlanetDetails -> JulianDate -> AstronomicalUnits
 
 -- | Calculates the planet's angular diameter for the given distance.
@@ -1066,19 +1075,28 @@ j2010PlanetDetails :: Planet -> PlanetDetails
 -- | Calculate the planet true anomaly using approximate method
 planetTrueAnomaly1 :: PlanetDetails -> JulianDate -> DecimalDegrees
 
+-- | Calculate the planet true anomaly using the second 'more accurate'
+--   method
+planetTrueAnomaly2 :: PlanetDetails -> JulianDate -> DecimalDegrees
+
 -- | Calculate the planet's postion at the given date. It takes a function
 --   to calculate true anomaly, planet details of the planet, planet
 --   details of the Earth and JulianDate.
 planetPosition :: (PlanetDetails -> JulianDate -> DecimalDegrees) -> PlanetDetails -> PlanetDetails -> JulianDate -> EquatorialCoordinates1
 
 -- | Calculate the planet's postion at the given date using the approximate
---   algoruthm. It takes a function to calculate true anomaly, planet
---   details of the planet, planet details of the Earth and JulianDate.
+--   algoruthm. It takes planet details of the planet, planet details of
+--   the Earth and JulianDate.
 planetPosition1 :: PlanetDetails -> PlanetDetails -> JulianDate -> EquatorialCoordinates1
 
 -- | Calculates the distance betweeth the planet and the Earth at the given
---   date. It takes the planet's detail, the Earth's details and the julian
---   date.
+--   date. It takes a function to calculate true anomaly, planet details of
+--   the planet, planet details of the Earth and JulianDate.
+planetDistance :: (PlanetDetails -> JulianDate -> DecimalDegrees) -> PlanetDetails -> PlanetDetails -> JulianDate -> AstronomicalUnits
+
+-- | Calculates the distance betweeth the planet and the Earth at the given
+--   date using the approximate algoruthm. It takes planet details of the
+--   planet, planet details of the Earth and JulianDate.
 planetDistance1 :: PlanetDetails -> PlanetDetails -> JulianDate -> AstronomicalUnits
 
 -- | Calculates the planet's angular diameter for the given distance.
